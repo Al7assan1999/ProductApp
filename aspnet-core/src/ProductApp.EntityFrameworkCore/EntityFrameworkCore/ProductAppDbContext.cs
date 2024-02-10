@@ -1,9 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProductApp.Attributes;
+using ProductApp.Products;
+using ProductApp.Variants;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -53,6 +57,10 @@ public class ProductAppDbContext :
 
     #endregion
 
+    public DbSet<Products.Product> Products { get; set; }
+    public DbSet<ProductAttribute> Attributes { get; set; }
+    public DbSet<Variant> Variants { get; set; }
+
     public ProductAppDbContext(DbContextOptions<ProductAppDbContext> options)
         : base(options)
     {
@@ -62,7 +70,7 @@ public class ProductAppDbContext :
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
+       
         /* Include modules to your migration db context */
 
         builder.ConfigurePermissionManagement();
@@ -74,6 +82,34 @@ public class ProductAppDbContext :
         builder.ConfigureFeatureManagement();
         builder.ConfigureTenantManagement();
 
+
+        //builder.Entity<Product>(b =>
+        //{
+        //    b.ToTable("Books", ProductAppConsts.DbSchema);
+        //    b.HasKey(x => x.Id);
+        //    b.ConfigureByConvention(); //auto configure for the base class props
+        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+
+        //    b.HasMany(x => x.Attributes);
+        //});
+        //builder.Entity<Attribute>(b =>
+        //{
+        //    b.ToTable("Attributes", ProductAppConsts.DbSchema);
+        //    b.HasKey(x => x.Id);
+
+        //    b.ConfigureByConvention(); //auto configure for the base class props
+        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        //    b.HasMany(x => x.Products);
+        //    b.HasMany(x => x.Variants);
+        //});
+        //builder.Entity<Variant>(b =>
+        //{
+        //    b.ToTable("Variants", ProductAppConsts.DbSchema);
+        //    b.HasKey(x => x.Id);
+        //    b.ConfigureByConvention(); //auto configure for the base class props
+        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+        //    b.HasOne(x => x.Attribute);
+        //});
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>
