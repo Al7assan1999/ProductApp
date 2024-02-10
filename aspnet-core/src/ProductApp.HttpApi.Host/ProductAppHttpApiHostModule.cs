@@ -29,6 +29,8 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
+using ProductApp.Products;
+using ProductApp.Product;
 
 namespace ProductApp;
 
