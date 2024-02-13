@@ -21,7 +21,9 @@ public class ProductAppApplicationAutoMapperProfile : Profile
         CreateMap<ProductAttribute, AttributeDto>().ReverseMap();
         CreateMap<ProductAttribute, AttributeProductListDto>().ReverseMap();
         CreateMap<CreateUpdateAttributeDto, ProductAttribute>();
-        CreateMap<Variant, VariantDto>().ReverseMap();
+        CreateMap<Variant, VariantDto>()
+            .ForMember(dest => dest.Image, source => source.MapFrom(src => src.ImageId))
+            .ReverseMap();
         CreateMap<Image, ImageDto>().ReverseMap();
         CreateMap<CreateUpdateLocalizedProductDto, LocalizedProduct>();
         CreateMap<CreateUpdateImageDto, Image>();

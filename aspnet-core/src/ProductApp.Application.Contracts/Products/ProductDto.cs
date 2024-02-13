@@ -14,7 +14,8 @@ namespace ProductApp.Products
         public string Description { get; set; }
         public string Code { get; set; }
         public decimal Price { get; set; }
-        public ImageDto Image { get; set; }
+        public string MainImagePath { get; set; }
+        public List<ImageDto> Images { get; set; }
         public List<AttributeProductListDto> Attributes { get; set; }
         public List<LocalizedProductDto> LocalizedProducts { get; set; }
     }

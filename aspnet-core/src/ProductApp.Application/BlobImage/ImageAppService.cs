@@ -29,7 +29,9 @@ namespace ProductApp.BlobImage
                 Path = Path.GetExtension(content.FileName),
                 AltName = content.FileName
             };
-            await _blobContainer.SaveAsync(Guid.NewGuid()+content.FileName, content.GetStream(), true);
+            image.Path = Guid.NewGuid() + content.FileName;
+            await _blobContainer.SaveAsync(image.Path, content.GetStream(), true);
+            
             var resutl = await _imageRepository.InsertAsync(image, true);
 
         }
