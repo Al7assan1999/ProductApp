@@ -1,4 +1,5 @@
 ﻿using ProductApp.Attributes;
+using ProductApp.Images;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace ProductApp.Variants
         public string Name { get; set; }
         public string Description { get; set; }
         public virtual ProductAttribute Attribute { get; set; }
+        public Guid? ImageId { get; set; }
+        public virtual Image? Image { get; set; }
 
     }
 }

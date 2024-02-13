@@ -20,7 +20,7 @@ namespace ProductApp.Attribute
 
         public override async Task<IQueryable<ProductAttribute>> WithDetailsAsync()
         {
-            return (await GetQueryableAsync()).Include(x => x.Variants);
+            return (await GetQueryableAsync()).Include(x => x.Variants).ThenInclude(x => x.Image);
         }
     }
 }

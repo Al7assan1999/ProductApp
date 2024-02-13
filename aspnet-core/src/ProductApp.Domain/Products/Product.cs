@@ -1,4 +1,6 @@
 ﻿using ProductApp.Attributes;
+using ProductApp.Images;
+using ProductApp.LocalizedProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,9 @@ namespace ProductApp.Products
         public string Code { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public ICollection<Image> Images {  get; set; }
         public virtual ICollection<ProductAttribute> Attributes { get; set; }
+        public virtual ICollection<LocalizedProduct> LocalizedProducts { get; set; }
 
         public void Update(string Name, string Code, decimal Price, string Description)
         {

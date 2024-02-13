@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductApp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace ProductApp.Migrations
 {
     [DbContext(typeof(ProductAppDbContext))]
-    partial class ProductAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240210184852_add-images")]
+    partial class addimages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,43 +114,9 @@ namespace ProductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("VariantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("VariantId")
-                        .IsUnique()
-                        .HasFilter("[VariantId] IS NOT NULL");
 
                     b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("ProductApp.LocalizedProducts.LocalizedProduct", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Language")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("LocalizedProduct");
                 });
 
             modelBuilder.Entity("ProductApp.Products.Product", b =>
@@ -234,9 +203,6 @@ namespace ProductApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
-
-                    b.Property<Guid?>("ImageId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -2010,35 +1976,6 @@ namespace ProductApp.Migrations
                     b.ToTable("AbpTenantConnectionStrings", (string)null);
                 });
 
-            modelBuilder.Entity("ProductApp.Images.Image", b =>
-                {
-                    b.HasOne("ProductApp.Products.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProductApp.Variants.Variant", "Variant")
-                        .WithOne("Image")
-                        .HasForeignKey("ProductApp.Images.Image", "VariantId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Variant");
-                });
-
-            modelBuilder.Entity("ProductApp.LocalizedProducts.LocalizedProduct", b =>
-                {
-                    b.HasOne("ProductApp.Products.Product", "Product")
-                        .WithMany("LocalizedProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ProductApp.Variants.Variant", b =>
                 {
                     b.HasOne("ProductApp.Attributes.ProductAttribute", "Attribute")
@@ -2210,18 +2147,6 @@ namespace ProductApp.Migrations
             modelBuilder.Entity("ProductApp.Attributes.ProductAttribute", b =>
                 {
                     b.Navigation("Variants");
-                });
-
-            modelBuilder.Entity("ProductApp.Products.Product", b =>
-                {
-                    b.Navigation("Images");
-
-                    b.Navigation("LocalizedProducts");
-                });
-
-            modelBuilder.Entity("ProductApp.Variants.Variant", b =>
-                {
-                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
