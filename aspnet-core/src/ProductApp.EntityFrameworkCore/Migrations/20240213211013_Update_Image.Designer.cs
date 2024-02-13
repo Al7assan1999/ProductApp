@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductApp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace ProductApp.Migrations
 {
     [DbContext(typeof(ProductAppDbContext))]
-    partial class ProductAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240213211013_Update_Image")]
+    partial class Update_Image
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,8 +194,9 @@ namespace ProductApp.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<Guid>("MainImage")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("MainImagePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -2015,7 +2019,7 @@ namespace ProductApp.Migrations
 
             modelBuilder.Entity("ProductApp.Images.Image", b =>
                 {
-                    b.HasOne("ProductApp.Products.Product", "Product")
+                    b.HasOne("ProductApp.Products.Product", null)
                         .WithMany("Images")
                         .HasForeignKey("ProductId");
 
@@ -2023,8 +2027,6 @@ namespace ProductApp.Migrations
                         .WithOne("Image")
                         .HasForeignKey("ProductApp.Images.Image", "VariantId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("Product");
 
                     b.Navigation("Variant");
                 });
