@@ -16,6 +16,7 @@ namespace ProductApp.Products
         public string Code { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
+        public string MainImagePath {  get; set; } 
         public ICollection<Image> Images {  get; set; }
         public virtual ICollection<ProductAttribute> Attributes { get; set; }
         public virtual ICollection<LocalizedProduct> LocalizedProducts { get; set; }

@@ -17,6 +17,5 @@ namespace ProductApp.Products
         public ImageDto Image { get; set; }
         public List<AttributeProductListDto> Attributes { get; set; }
         public List<LocalizedProductDto> LocalizedProducts { get; set; }
-        public string ErrorMessage { get; set; }
     }
 }
