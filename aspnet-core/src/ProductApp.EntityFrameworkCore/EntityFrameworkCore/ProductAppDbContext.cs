@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductApp.Attributes;
+using ProductApp.Images;
 using ProductApp.Products;
 using ProductApp.Variants;
+using System.Reflection.Emit;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -60,6 +62,7 @@ public class ProductAppDbContext :
     public DbSet<Products.Product> Products { get; set; }
     public DbSet<ProductAttribute> Attributes { get; set; }
     public DbSet<Variant> Variants { get; set; }
+    public DbSet<Image> Images { get; set; }
 
     public ProductAppDbContext(DbContextOptions<ProductAppDbContext> options)
         : base(options)
@@ -83,33 +86,24 @@ public class ProductAppDbContext :
         builder.ConfigureTenantManagement();
 
 
-        //builder.Entity<Product>(b =>
-        //{
-        //    b.ToTable("Books", ProductAppConsts.DbSchema);
-        //    b.HasKey(x => x.Id);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
 
-        //    b.HasMany(x => x.Attributes);
-        //});
-        //builder.Entity<Attribute>(b =>
-        //{
-        //    b.ToTable("Attributes", ProductAppConsts.DbSchema);
-        //    b.HasKey(x => x.Id);
+       
 
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
-        //    b.HasMany(x => x.Products);
-        //    b.HasMany(x => x.Variants);
-        //});
-        //builder.Entity<Variant>(b =>
-        //{
-        //    b.ToTable("Variants", ProductAppConsts.DbSchema);
-        //    b.HasKey(x => x.Id);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    b.Property(x => x.Name).IsRequired().HasMaxLength(128);
-        //    b.HasOne(x => x.Attribute);
-        //});
+        builder.Entity<Image>(b =>
+        {
+            b.HasOne(x => x.Variant)
+            .WithOne(x => x.Image)
+            .HasForeignKey<Variant>(x => x.ImageId)
+            .OnDelete(DeleteBehavior.SetNull); ;
+        });
+
+        builder.Entity<Variant>(b =>
+        {
+            b.HasOne(x => x.Image)
+                .WithOne(x => x.Variant)
+                .HasForeignKey<Image>(x => x.VariantId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
         /* Configure your own tables/entities inside here */
 
         //builder.Entity<YourEntity>(b =>

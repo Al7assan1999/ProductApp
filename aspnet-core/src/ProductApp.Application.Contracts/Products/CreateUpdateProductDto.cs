@@ -1,7 +1,11 @@
-﻿using System;
+﻿using ProductApp.BlobImage;
+using ProductApp.LocalizedProducts;
+using ProductApp.Variants;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Content;
 
 namespace ProductApp.Products
 {
@@ -12,5 +16,8 @@ namespace ProductApp.Products
         public string Code { get; set; }
         public decimal Price { get; set; }
         public List<Guid> Attributes { get; set; }
+        public List<CreateUpdateVariantDto> Variants { get; set; }
+        public List<Guid> Images { get; set; }
+        public List<CreateUpdateLocalizedProductDto> LocalizedProducts { get; set; }
     }
 }

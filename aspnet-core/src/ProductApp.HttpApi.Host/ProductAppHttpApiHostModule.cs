@@ -31,6 +31,10 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.VirtualFileSystem;
 using ProductApp.Products;
 using ProductApp.Product;
+using Autofac.Core;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using Volo.Abp.Content;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProductApp;
 
@@ -154,6 +158,7 @@ public class ProductAppHttpApiHostModule : AbpModule
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductApp API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
                 options.CustomSchemaIds(type => type.FullName);
+
             });
     }
 
